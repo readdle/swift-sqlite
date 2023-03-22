@@ -8,7 +8,7 @@ let unicodeLinkerSettings: [LinkerSetting]
 let unicodeTarget: [PackageDescription.Target]
 let unicodeTargetDependency: [Target.Dependency]
 
-if ProcessInfo.processInfo.environment["SWIFT_ANDROID_ARCH"] != nil {
+if ProcessInfo.processInfo.environment["BUILD_ANDROID"] != nil {
     // We use Swift Toolchain's ICU for Android OS
     unicodeTarget = []
     unicodeTargetDependency = []
