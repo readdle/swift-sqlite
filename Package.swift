@@ -8,20 +8,6 @@ var dependencies: [PackageDescription.Package.Dependency] = []
 var unicodeDependencies: [Target.Dependency] = []
 var unicodeLinkerSettings: [LinkerSetting]?
 
-if ProcessInfo.processInfo.environment["BUILD_ANDROID"] != nil {
-    // We use Swift Toolchain's ICU for Android OS
-    unicodeLinkerSettings = [
-        .linkedLibrary("icuucswift"),
-        .linkedLibrary("icui18nswift"),
-        .linkedLibrary("icudataswift")
-    ]
-} else {
-    dependencies = [
-        .package(name: "unicode", url: "https://github.com/readdle/swift-unicode", .exact("68.2.0"))
-    ]
-    unicodeDependencies = ["unicode"]
-}
-
 let products: [PackageDescription.Product] = [
     .library(name: "SQLite", targets: ["SQLite"]),
 ]
@@ -38,7 +24,6 @@ let targets: [PackageDescription.Target] = [
             .define("SQLITE_ENABLE_LOCKING_STYLE", to: "0"),
             .define("SQLITE_ENABLE_NORMALIZE", to: "1"),
             .define("SQLITE_ENABLE_FTS5", to: "1"),
-            .define("SQLITE_ENABLE_ICU", to: "1"),
             .define("SQLITE_ENABLE_RTREE", to: "1"),
             .define("SQLITE_ENABLE_UNLOCK_NOTIFY", to: "1"),
         ],
