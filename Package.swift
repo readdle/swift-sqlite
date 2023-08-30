@@ -10,10 +10,13 @@ var unicodeLinkerSettings: [LinkerSetting]?
 
 if ProcessInfo.processInfo.environment["BUILD_ANDROID"] != nil {
     // We use Swift Toolchain's ICU for Android OS
+    guard let icuVersion = ProcessInfo.processInfo.environment["SWIFT_ANDROID_ICU_VERSION"] else  {
+        fatalError("Can't find SWIFT_ANDROID_ICU_VERSION env variable")
+    }
     unicodeLinkerSettings = [
-        .linkedLibrary("icuucswift"),
-        .linkedLibrary("icui18nswift"),
-        .linkedLibrary("icudataswift")
+        .linkedLibrary("icuuc.\(icuVersion)"),
+        .linkedLibrary("icui18n.\(icuVersion)"),
+        .linkedLibrary("icudata.\(icuVersion)")
     ]
 } else {
     dependencies = [
